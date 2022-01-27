@@ -1,0 +1,27 @@
+>> assignment1_problem3
+
+Optimal solution found.
+
+
+sol =
+
+         0
+         0
+  467.1442
+         0
+         0
+         0
+         0
+         0
+         0
+  147.6378
+         0
+   53.7634
+         0
+  459.6856
+         0
+
+
+ans =
+
+   8.5135e+03
