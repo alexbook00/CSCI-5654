@@ -116,7 +116,7 @@ investment_market_max = [
     7000;
 ];
 
-x = optimvar('x', 15, 'LowerBound', zeros(15,1));
+x = optimvar('x', 15, 'LowerBound', 0);
 
 prob = optimproblem('Objective', profit_per_unit.'*x, 'ObjectiveSense', 'max');
 
