@@ -1,0 +1,166 @@
+\documentclass[12pt]{article}
+
+% import a set of useful packages for math
+\usepackage{amsmath, amsfonts, amssymb, mathtools}
+
+% this package makes margins smaller
+\usepackage{fullpage}
+
+% for importing images
+\usepackage{graphicx}
+
+%%%% import any other packages here
+\usepackage{algorithmic}
+\usepackage{algorithm}
+\usepackage{hyperref}
+\hypersetup{colorlinks,urlcolor=blue}
+%%%% make any other definitions here
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+\title{Homework 1 \\
+       Colorado CSCI 5654}
+\author{Alex Book}
+\date{January 27, 2021}
+\maketitle
+
+
+%%%%%%%%%%%%%%%%
+\section*{Problem 1}
+\begin{align*}
+\text{min. } &3x_1 - 5x_2 \\
+\text{s.t. } &4x_1 + x_2 \geq -4 \\
+&2x_1 - x_2 \geq -8 \\
+&x_1 + 2x_2 \leq 4 \\
+&x_1 \geq 0 \\
+\\
+&\downarrow \\
+\\
+\text{max. } &-3x_1 + 5x_2^+ - 5x_2^- \\
+\text{s.t. } &-4x_1 - x_2^+ + x_2^- \leq 4 \\
+& -2x_1 + x_2^+ - x_2^- \leq 8 \\
+& x_1 + 2x_2^+ - 2x_2^- \leq 4 \\
+& x_1, x_2^+, x_2^- \geq 0
+\end{align*}
+
+%%%%%%%%%%%%%%%%
+\newpage
+\section*{Problem 2}
+\begin{align*}
+\text{max. } &-3x_1 + 5x_2^+ - 5x_2^- \\
+\text{s.t. } &-4x_1 - x_2^+ + x_2^- \leq 4 &\leftarrow w_1 \\
+& -2x_1 + x_2^+ - x_2^- \leq 8 &\leftarrow w_2 \\
+& x_1 + 2x_2^+ - 2x_2^- \leq 4 &\leftarrow w_3 \\
+& x_1, x_2^+, x_2^- \geq 0 \\
+\\
+\downarrow \\
+\\
+\text{max. } &-3x_1 + 5x_2^+ - 5x_2^- \\
+\text{s.t. } &w_1 = 4 + 4x_1 + x_2^+ - x_2^- \\
+&w_2 = 8 + 2x_1 - x_2^+ + x_2^- \\
+&w_3 = 4 - x_1 - 2x_2^+ + 2x_2^- \\
+& x_1, x_2^+, x_2^-, w_1, w_2, w_3 \geq 0 \\
+\end{align*}
+
+Initial dictionary: \\
+\\
+\begin{tabular}{ l|l }
+w_1 & 4 + 4x_1 + x_2^+ - x_2^- \\
+w_2 & 8 + 2x_1 - x_2^+ + x_2^- \\
+w_3 & 4 - 1x_1 - 2x_2^+ + 2x_2^- \\
+\hline
+z & 0 - 3x_1 + 5x_2^+ - 5x_2^-
+\end{tabular} \\
+\\
+\\
+Entering variable: $x_2^+$, Leaving variable: $w_3$ \\
+$x_2^+ = 2 - .5x_1 - .5w_3 + x_2^-$ \\
+\\
+Dictionary after pivoting: \\
+\\
+\begin{tabular}{ l|l }
+w_1 & 6 + 3.5x_1 - .5w_3 + 0x_2^- \\
+w_2 & 6 + 2.5x_1 + .5w_3 + 0x_2^- \\
+x_2^+ & 2 - .5x_1 - .5w_3 + x_2^- \\
+\hline
+z & 10 - 5.5x_1 - 2.5w_3 + 0x_2^-
+\end{tabular}
+
+%%%%%%%%%%%%%%%%
+\newpage
+\section*{Problem 3}
+See attached files for code and solutions. Solutions are copied below for convenience: \\
+\\
+\begin{tabular}{r|l}
+Investment Number & Units Purchased \\
+\hline
+1 & 0 \\
+2 & 0 \\
+3 & 467.1442 \\
+4 & 0 \\
+5 & 0 \\
+6 & 0 \\
+7 & 0 \\
+8 & 0 \\
+9 & 0 \\
+10 & 147.6378 \\
+11 & 0 \\
+12 & 53.7634 \\
+13 & 0 \\
+14 & 459.6856 \\
+15 & 0 \\
+\end{tabular} \\
+\\
+Total profits: 8,513.50 \\
+\\
+This problem is both feasible and bounded.
+
+%%%%%%%%%%%%%%%%
+\newpage
+\section*{Problem 4}
+\subsection*{a.}
+Need to prove $A(\lambda x_1 + (1-\lambda)x_2) \leq b$ \\
+\begin{align*}
+& A(\lambda x_1 + (1-\lambda)x_2) \\
+= & \lambda Ax_1 + Ax_2 - \lambda Ax_2 \\
+\leq & \lambda b + b - \lambda b = b
+\end{align*}
+
+\subsection*{b.}
+Need to prove $c^T(\lambda x_1 + (1 - \lambda)x_2) = z^*$ \\
+\begin{align*}
+& c^T(\lambda x_1 + (1 - \lambda)x_2) \\
+= & \lambda c^T x_1 + c^T x_2 - \lambda c^T x_2 \\
+= & \lambda z^* + z^* - \lambda z^* \\
+= & z^*
+\end{align*}
+
+%%%%%%%%%%%%%%%%
+\newpage
+\section*{Problem 5}
+\subsection*{a.}
+$a_1 x_1 - a_5 x_5 \leq 0$ \\
+$a_5 x_5 - a_3 x_3 \leq 0$
+
+\subsection*{b.}
+$.4\Sigma_{i=1}^{n} a_i x_i - a_1 x_1 \leq 0 \xrightarrow{simplify} .4\Sigma_{i=2}^{n} a_i x_i - .6 a_1 x_1 \leq 0$ \\
+$a_1 x_1 - .6\Sigma_{i=1}^{n} a_i x_i \leq 0 \xrightarrow{simplify} .4 a_1 x_1 - .6\Sigma_{i=2}^{n} a_i x_i \leq 0$
+
+\subsection*{c.}
+Such a constraint allows solutions along at least one of the $n$ axes. The set of points between solutions that lie on separate axes contains points that aren't on any axis (there are points on the line between two solutions that are not themselves solutions). Thus this constraint is not convex, and LP formulation is not possible.
+
+%%%%%%%%%%%%%%%%
+\newpage
+\section*{Problem 6}
+\begin{align*}
+x_1 - 10w_1 \leq 0 \\
+x_2 - 15w_2 \leq 0 \\
+x_1 - (1-w_2)10 \leq 0 \\
+x_2 - (1-w_1)15 \leq 0
+\end{align*}
+
+\end{document}
