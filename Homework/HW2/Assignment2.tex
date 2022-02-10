@@ -1,0 +1,181 @@
+\documentclass[12pt]{article}
+
+% import a set of useful packages for math
+\usepackage{amsmath, amsfonts, amssymb, mathtools}
+
+% this package makes margins smaller
+\usepackage{fullpage}
+
+% for importing images
+\usepackage{graphicx}
+
+%%%% import any other packages here
+\usepackage{algorithmic}
+\usepackage{algorithm}
+\usepackage{hyperref}
+\hypersetup{colorlinks,urlcolor=blue}
+%%%% make any other definitions here
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+\title{Homework 2 \\
+       Colorado CSCI 5654}
+\author{Alex Book}
+\date{February 9, 2022}
+\maketitle
+
+
+%%%%%%%%%%%%%%%%
+\section*{Problem 1}
+\begin{tabular}{|c|c|c|c|}
+    \hline
+    Entering & Leaving & Objective Fn. value in next dictionary & Next Dictionary Degenerate (Y/N)? \\
+    \hline
+    $x_2$ & $w_1, w_5$ & 15 & Y \\
+    \hline
+    $x_5$ & $w_5$ & 12 & N \\
+    \hline
+    $x_6$ & $w_2, x_3, x_4$ & 13 & Y \\
+    \hline
+    $w_3$ & $w_2, x_3$ & 17 & Y \\
+    \hline
+\end{tabular}
+
+%%%%%%%%%%%%%%%%
+\newpage
+\section*{Problem 2}
+\subsection*{(A)}
+$x_{N,j} = -\frac {b_i + a_{i1}x_{N,1} + \dots + a_{i j-1}x_{N,j-1} + a_{i j+1}x_{N,j+1} + \dots + a_{i n}x_{N,n} - x_{B,i}} {a_{i j}}$ \\
+$x_{N,j}$ is multiplied by $c_j$ during one pivot step of simplex. The negative in front of the entire fraction cancels with the negative in front of $x_{B,i}$ in the numerator. This leaves the objective row coefficient for $x_{B, i}$ to be $\frac{c_j}{a_{i j}}$.
+
+\subsection*{(B)}
+$c_j$ must be positive before the pivot step of simplex, as it is the coefficient of the entering variable. $a_{i j}$ must be negative before the pivot step of simplex, as it is the coefficient of the leaving variable. Therefore the entire objective row coefficient of $x_{B, i}$ after the pivot step of simplex must be negative. This means $x_{B, i}$ cannot be an entering variable in the next dictionary (entering variables must have a positive coefficient).
+
+%%%%%%%%%%%%%%%%
+\newpage
+\section*{Problem 3}
+\subsection*{(A)}
+\begin{tabular}{c | c c c}
+    $w_1$ & & $x_1$ & $+ x_2$ \\
+    $w_2$ & 1 & $+ x_1$ & $+ x_2$ \\
+    \hline
+    $z$ & 1 & $+ x_1$ & $+ x_2$
+\end{tabular}
+
+\subsection*{(B)}
+\begin{tabular}{c | c c c}
+    $w_1$ & 1 & $- x_1$ & $+ x_2$ \\
+    $w_2$ & & & $+ x_2$ \\
+    \hline
+    $z$ & 1 & $+ x_1$ & $+ x_2$
+\end{tabular}
+
+\subsection*{(C)}
+This is not possible, as a non-degenerate dictionary must increase the value of the objective function upon pivoting (degenerate dictionaries are by definition not increasing the objective function).
+
+\subsection*{(D)}
+This is not possible, as the simplex method (by which a pivot is employed) transitions from one feasible dictionary to another. So if the initial dictionary is feasible, so must be the resulting dictionary after a pivot occurs.
+
+\subsection*{(E)}
+\begin{tabular}{c | c c c}
+    $w_1$ & 1 & $+ x_1$ & $+ x_2$ \\
+    $w_2$ & 1 & $- x_1$ & $+ x_2$ \\
+    \hline
+    $z$ & 1 & $+ x_1$ & $+ x_2$
+\end{tabular}
+
+%%%%%%%%%%%%%%%%
+\newpage
+\section*{Problem 4}
+\subsection*{(A)}
+First we will check that $x_0 + \lambda r$ is feasible for any $\lambda \geq 0$:
+\begin{align*}
+    A(x_0 + \lambda r) & \leq b \\
+    Ax_0 + A \lambda r & \leq b \\
+    b & \leq b
+\end{align*}
+
+The transition from line 2 to line 3 is valid because we are given that $Ax_0 \leq b$ and $Ar \leq 0$ (so $A\lambda r \leq 0$ for all $\lambda \geq 0$).
+
+\begin{align*}
+    x_0 + \lambda r \geq 0 \\
+    0 \geq 0
+\end{align*}
+
+The transition from line 1 to line 2 is valid because we are given that $x_0 \geq 0$ and $r \geq 0$ (so $\lambda r \geq 0$ for all $\lambda \geq 0$). \\
+\\
+We will then see what value it achieves for the objective:
+\begin{align*}
+    c^T (x_0 + \lambda r) &= c^T x_0 + c^T \lambda r
+\end{align*}
+
+We are given that $c^T r > 0,$ so $c^T \lambda r$ (and thus the entire objective function) approaches infinity as we push $\lambda \xrightarrow{} \infty$. Therefore the given LP is unbounded from above.
+
+\subsection*{(B)}
+We know a few certainties: $b_1, ..., b_m \geq 0$ (since the dictionary is feasible), $a_{1j}, ..., a_{m j} \geq 0$ (since there is no corresponding leaving variable for $X_{N, j}$), and $c_j > 0$ (since $X_{N, j}$ is the entering variable). Thus we can set $X_{N, j}$ to any arbitrary positive number $\lambda$ and none of the basic variables will become negative, so the resulting solution is feasible. As we push $\lambda \xrightarrow{} \infty,$ the value of the objective function increases $\xrightarrow{} \infty$. Therefore the given LP must be unbounded from above.
+
+%%%%%%%%%%%%%%%%
+\newpage
+\section*{Problem 5}
+\subsection*{(A)}
+Dual problem: \\
+\\
+\begin{tabular}{c c c c c c}
+    max. & $-5y_1$ & $-6y_2$ & $-4y_3$ & $-2y_4$ \\
+    s.t. & $-y_1$ & $-2y_2$ & $+y_3$ & $+y_4$ & $\leq -2$ \\
+    & $y_1$ & & $-y_3$ & & $\leq 3$ \\
+    & $y_1$ & $-y_2$ & & & $\leq -1$ \\
+    & & $y_2$ & $+y_3$ & & $\leq 1$ \\
+    & & & & $-y_4$ & $\leq -1$ \\
+    & $y_1,$ & $y_2,$ & $y_3,$ & $y_4,$ & $\geq 0$
+\end{tabular}
+
+\subsection*{(B)}
+$x_1 = \frac{10}{3}, x_2 = 8, x_3 = 0, x_4 = \frac{2}{3}, x_5 = \frac{16}{3}$ \\
+\\
+Complementary slackness tells us the following must be true: \\
+\\
+$x_j = 0$ \textbf{ or } $c_j = \sum_i y_i a_{ij}$ for all $x_j \in \bar{x}, c_j \in \bar{c}$ \\
+$y_i = 0$ \textbf{ or } $b_i = \sum_j a_{ij} x_j$ for all $y_i \in \bar{y}, b_i \in \bar{b}$ \\
+\\
+We now have the following system of equations to satisfy $c_j = \sum_i y_i a_{ij}$ for all $c_j \in \bar{c}$ ($x_3 = 0,$ so we skip checking the third constraint): \\
+\\
+\begin{tabular}{c c c c c}
+    $-y_1$ & $-2y_2$ & $+y_3$ & $+y_4$ & $= -2$ \\
+    $y_1$ & & $-y_3$ & & $= 3$ \\
+    & $y_2$ & $+y_3$ & & $= 1$ \\
+    & & & $-y_4$ & $= -1$
+\end{tabular} \\
+\\
+Solving the system, we get for the dual solution: $y_1=4, y_2=0, y_3=1, y_4=1$. We then check the dual solution to satisfy $b_i = \sum_j a_{ij} x_j$ for all $b_i \in \bar{b}$ (we can skip $y_2$, since it satisfies $y_i = 0$). \\
+\\
+Checking $y_1$, it must be true that $x_1 - x_2 - x_3 = 5$. However, $\frac{10}{3} - 8 - 0 = -\frac{14}{3} \neq 5$. \\
+\\
+The dual solution cannot be used to certify the given primal solution. Therefore, the given primal solution is not optimal.
+
+%%%%%%%%%%%%%%%%
+\newpage
+\section*{Problem 6}
+Dual problem: \\
+\\
+\begin{tabular}{c c c c}
+    min. & $b^T y$ & $+y_0$ & \\
+    s.t. & $A^T y$ & $+\bar{1} y_0$ & $\geq c$ \\
+    & $y,$ & $y_0$ & $\geq 0$
+\end{tabular} \\
+\\
+We can set $y = 0$, which is feasible, and equivalently leaves us with the following problem: \\
+\\
+\begin{tabular}{c c c}
+    min. & $y_0$ & \\
+    s.t. & $\bar{1} y_0$ & $\geq c$ \\
+    & $y_0$ & $\geq 0$
+\end{tabular} \\
+\\
+If we then set $y_0 = \max\{c, 0\},$ we have a feasible solution. Therefore, setting $y = 0, y_0 = \max\{c, 0\},$ the dual of the given problem is always feasible. Therefore the primal must also always be feasible (strong duality theorem).
+
+\end{document}
