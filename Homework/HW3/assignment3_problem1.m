@@ -24,9 +24,9 @@ A = [A_original eye(6)];
 
 c = [c_original zeros(1,6)];
 
-basis0 = [3 4 5 7 8 12];
+basis0 = [5 6 7 9 11 12];
 
-nonbasis0 = [1 2 6 9 10 11];
+nonbasis0 = [1 2 3 4 8 10];
 
 A_B = A(:, basis0);
 A_N = A(:, nonbasis0);
@@ -47,17 +47,20 @@ fprintf(1, 'Objective Value: %f\n', objVal)
 fprintf(1, 'Objective Row: \n')
 disp(y0)
 
-% choose entering variable (use largest negative coefficient from objective
-% row)
-enteringIndex = 3; % x6 has the largest positive coefficient (4)
-fprintf(1, '%d is the entering variable \n', nonbasis0(enteringIndex))
+interior_of_dict = -A_B \ A_N;
+disp(interior_of_dict)
 
-% work out the column corresponding to the objective row
-Aj = -A_N(:, enteringIndex);
-AjHat = A_B\Aj;
-fprintf(1, 'Constant Column, Column Corresponding to Entering Variable\n')
-disp([bhat0, AjHat])
-
-% to do leaving variable analysis
-leavingIndex = 6;
-fprintf('%d is the leaving variable\n', basis0(leavingIndex))
+% % choose entering variable (use largest negative coefficient from objective
+% % row)
+% enteringIndex = 3; % x6 has the largest positive coefficient (4)
+% fprintf(1, '%d is the entering variable \n', nonbasis0(enteringIndex))
+% 
+% % work out the column corresponding to the objective row
+% Aj = -A_N(:, enteringIndex);
+% AjHat = A_B\Aj;
+% fprintf(1, 'Constant Column, Column Corresponding to Entering Variable\n')
+% disp([bhat0, AjHat])
+% 
+% % to do leaving variable analysis
+% leavingIndex = 6;
+% fprintf('%d is the leaving variable\n', basis0(leavingIndex))
