@@ -16,6 +16,8 @@ b = np.array([
 	0, 0, 0, 0, 4, 4, 4, 4
 ])
 
+dict = {}
+
 for i in range(len(A)):
 	for j in range(len(A)):
 		for k in range(len(A)):
@@ -34,4 +36,8 @@ for i in range(len(A)):
 				# check if candidate_solution satisfies all 8 constraints
 				constraints_saturated = np.where(np.isclose(A @ candidate_vertex, b))[0] + 1
 				if np.all(A @ candidate_vertex <= b) and len(constraints_saturated) > 2:
-					print(f'########## \n Vertex: {candidate_vertex} \n Constraints Saturated: {constraints_saturated}')
+					if tuple(candidate_vertex) not in dict.keys():
+						dict[tuple(candidate_vertex)] = constraints_saturated
+					# print(f'########## \n Vertex: {candidate_vertex} \n Constraints Saturated: {constraints_saturated}')
+
+pprint(dict)
