@@ -1,0 +1,303 @@
+\documentclass[12pt]{article}
+
+% import a set of useful packages for math
+\usepackage{amsmath, amsfonts, amssymb, mathtools}
+
+% this package makes margins smaller
+\usepackage{fullpage}
+
+% for importing images
+\usepackage{graphicx}
+
+%%%% import any other packages here
+\usepackage{algorithmic}
+\usepackage{algorithm}
+\usepackage{hyperref}
+\hypersetup{colorlinks,urlcolor=blue}
+%%%% make any other definitions here
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+\title{Homework 4 \\
+       Colorado CSCI 5654}
+\author{Alex Book}
+\date{March 18, 2022}
+\maketitle
+
+
+%%%%%%%%%%%%%%%%
+\textbf{Note:} All code (and thus, worked-out solution) for this assignment (namely, problems 3 and 4) can be found \href{https://github.com/alexbook00/CSCI-5654/tree/main/Homework/HW4}{here}.
+
+\section*{Problem 1}
+\subsection*{(A)}
+min$_{x_1, x_2, x_3 \in \mathbb{R}^3}$ max$(2x_1+3x_2-5x_3, x_1, x_2, 2x_1 - x_2 + x_3)$ \\
+\\
+Let $t=$ max$(2x_1+3x_2-5x_3, x_1, x_2, 2x_1 - x_2 + x_3)$ \\
+\\
+\begin{align*}
+    \text{min. } & t \\
+    \text{s.t. } & 2x_1 + 3x_2 - 5x_3 \leq t \\
+    & x_1 \leq t \\
+    & x_2 \leq t \\
+    & 2x_1 - x_2 + x_3 \leq t
+\end{align*}
+
+\newpage
+\subsection*{(B)}
+min$_{x_1, x_2, x_3 \in \mathbb{R}^3} (|x_1+x_2| + |x_2 - x_3| + |x_3 - x_1| + |x_1 + x_2 + x_3|)$ \\
+\\
+Let $t_1=|x_1+x_2|, t_2=|x_2 - x_3|, t_3=|x_3 - x_1|, t_4=|x_1 + x_2 + x_3|$ \\
+\\
+\begin{align*}
+    \text{min. } & t_1 + t_2 + t_3 + t_4 \\
+    \text{s.t. } & x_1 + x_2 \leq t_1 \\
+    & -(x_1 + x_2) \leq t_1 \\
+    & x_2 - x_3 \leq t_2 \\
+    & -(x_2 - x_3) \leq t_2 \\
+    & x_3 - x_1 \leq t_3 \\
+    & -(x_3 - x_1) \leq t_3 \\
+    & x_1 + x_2 + x_3 \leq t_4 \\
+    & -(x_1 + x_2 + x_3) \leq t_4
+\end{align*}
+
+\newpage
+\subsection*{(C)}
+\begin{align*}
+    \text{min. } & \text{max}(|x_1|, |x_2|, |x_3|, |x_1 + x_2|) \\
+    \text{s.t. } & x_1 - x_2 \leq 5 \\
+    & x_2 \leq 3 \\
+    \\
+    \downarrow & \text{ Let } t= \text{max}(|x_1|, |x_2|, |x_3|, |x_1 + x_2|) \\
+    \\
+    \text{min. } & t \\
+    \text{s.t. } & x_1 - x_2 \leq 5 \\
+    & x_2 \leq 3 \\
+    & |x_1| \leq t \\
+    & |x_2| \leq t \\
+    & |x_3| \leq t \\
+    & |x_1 + x_2| \leq t \\
+    \\
+    \downarrow \\
+    \\
+    \text{min. } & t \\
+    \text{s.t. } & x_1 - x_2 \leq 5 \\
+    & x_2 \leq 3 \\
+    & x_1 \leq t \\
+    & -x_1 \leq t \\
+    & x_2 \leq t \\
+    & -x_2 \leq t \\
+    & x_3 \leq t \\
+    & -x_3 \leq t \\
+    & x_1 + x_2 \leq t \\
+    & -(x_1 + x_2) \leq t
+\end{align*}
+
+%%%%%%%%%%%%%%%%
+\newpage
+\section*{Problem 2}
+\subsection*{(A)}
+$f_2(x) = \sqrt{\sum_{j=1}^{2k+1}(x_j - x)^2}$
+\begin{align*}
+    \frac{\mathop{d}}{\mathop{dx}}\sqrt{\sum_{j=1}^{2k+1}(x_j - x)^2} &= \frac{1}{2} [\sum_{j=1}^{2k+1}(x_j - x)^2]^{-\frac{1}{2}} \cdot -2 \sum_{j=1}^{2k+1}(x_j - x) \\
+    0 &= -\frac{\sum_{j=1}^{2k+1}(x_j - x)}{\sum_{j=1}^{2k+1}(x_j - x)^2} \\
+    0 &= \sum_{j=1}^{2k+1}(x_j - x) \\
+    0 &= -x(2k+1) + \sum_{j=1}^{2k+1}x_j \\
+    x &= \frac{\sum_{j=1}^{2k+1}x_j}{2k+1} = \text{mean}(\{x_1, x_2, \dots, x_{2k+1}\})
+\end{align*}
+\subsection*{(B)}
+$f_1(x) = \sum_{j=1}^{2k+1}|x_j-x|$ \\
+\\
+The median of $\{x_1, x_2, \dots, x_{2k+1}\}$ is $x_{k+1}$. Let us consider $f_1(x_{k+1})$ against $f_1(x_{k+1}+\epsilon)$ for tiny values $\epsilon > 0, \epsilon < 0$. \\
+\\
+$f_1(x_{k+1} + \epsilon) = \sum_{j=1}^{2k+1}|x_j-x-\epsilon|$ \\
+\\
+When $\epsilon > 0$, the $k$ values greater than the median will see a change in the value of $|x_j-x-\epsilon|$ of $-\epsilon$, the $k$ values less than the median will see in a change in the value of the same quantity of $\epsilon$, and the median value will see a change in the the value of the same quantity of $\epsilon$. Therefore the total change is $-\epsilon k + \epsilon (k+1) = \epsilon > 0$. So $f_1(x_{k+1}) < f_1(x_{k+1}+\epsilon)$. \\
+\\
+When $\epsilon < 0$, the $k$ values greater than the median will see a change in value to $|x_j-x-\epsilon|$ of $-\epsilon$, the $k$ values less than the median will see in a change in value to the same quantity of $\epsilon$, and the median value will see a change in the value to the same quantity of $-\epsilon$. Therefore the total change is $-\epsilon (k+1) + \epsilon k = -\epsilon > 0$. So $f_1(x_{k+1}) < f_1(x_{k+1}+\epsilon)$. \\
+\\
+Therefore the value $x_{k+1}$ minimizes $f_1(x)$.
+
+%%%%%%%%%%%%%%%%
+\newpage
+\section*{Problem 3}
+\subsection*{(A)}
+Coefficients:
+\begin{verbatim}
+    [ -17.75 ,   63.881,   -4.305,    0.06 ,  -17.75 ,   -0.001,
+          0.001,   -0.001,   -0.001,   -0.008,   -0.063,   -0.792,
+         -4.352,   24.219,  156.829, -201.597,  -94.755, -112.882,
+         28.312,   -9.874,  -26.783,   34.072,   71.124,   55.257,
+         24.885,   12.364,   20.839,   37.646,   50.404,   53.612,
+         47.943,   37.074,   24.992,   14.578,    7.27 ,    3.315,
+          2.201,    3.076,    5.039,    7.313,    9.321,   10.693,
+         11.242,   10.922,    9.786,    7.948,    5.552,    2.752,
+         -0.306,   -3.491,   -6.69 ,   -9.814,  -12.792,  -15.573,
+        -18.125,  -20.426,  -22.467,  -24.249,  -25.779,  -27.067,
+        -28.13 ,  -28.984,  -29.647,  -30.139,    0.   ,   -0.   ,
+          0.   ,    0.003,    0.001,   -0.01 ,   -0.027,   -0.319,
+         -6.754,  -41.521,   72.674,  268.807, -231.363,   59.368,
+        -52.236, -242.753,  -21.88 ,  106.577,  -22.345, -165.553,
+       -155.209,  -28.183,   94.225,  139.922,  105.191,   25.902,
+        -55.685, -110.155, -125.86 , -105.471,  -59.816,   -2.294,
+         54.916,  102.603,  134.768,  149.953,  148.909,  134.017,
+        108.527,   75.975,   39.768,    2.929,  -32.028,  -63.147,
+        -89.009, -108.683, -121.658, -127.767, -127.112, -119.997,
+       -106.869,  -88.269,  -64.795,  -37.064,   -5.691,   28.724,
+         65.619,  104.466,  144.786,  186.147]
+\end{verbatim}
+
+\includegraphics[scale=.9]{3A_fit.PNG}
+\includegraphics[scale=.9]{3A_residuals.PNG}
+\\
+This model sees quite a bit of overfitting, as can be seen if one extends the predictions past 60 months, where the exchange rate shoots off upwards very quickly.
+
+\newpage
+\subsection*{(B)}
+Coefficients:
+\begin{verbatim}
+    [ 0.343,  0.029, -0.001,  0.   ,  0.343, -0.   , -0.   , -0.002,
+        0.001, -0.004,  0.   ,  0.006,  0.   ,  0.   ,  0.012,  0.001,
+        0.013,  0.   , -0.   ,  0.   ,  0.   ,  0.   ,  0.   ,  0.   ,
+        0.   ,  0.   ,  0.038,  0.004,  0.   ,  0.   ,  0.   ,  0.   ,
+        0.   ,  0.   ,  0.   ,  0.025,  0.008,  0.   ,  0.   ,  0.   ,
+        0.   ,  0.   ,  0.   ,  0.   ,  0.   ,  0.   ,  0.   ,  0.   ,
+        0.   ,  0.   ,  0.   ,  0.   ,  0.   ,  0.   ,  0.   ,  0.   ,
+        0.   ,  0.   ,  0.   ,  0.   ,  0.   ,  0.   ,  0.   ,  0.105,
+        0.   , -0.   , -0.002,  0.004,  0.001, -0.002, -0.003,  0.005,
+       -0.001,  0.   , -0.   ,  0.   , -0.   , -0.   ,  0.   ,  0.   ,
+        0.   ,  0.   ,  0.   ,  0.   ,  0.   ,  0.   ,  0.   ,  0.   ,
+        0.   ,  0.   ,  0.   ,  0.   ,  0.   ,  0.   ,  0.   ,  0.   ,
+        0.   ,  0.   ,  0.   ,  0.   ,  0.   ,  0.   ,  0.   ,  0.   ,
+        0.   ,  0.   ,  0.   ,  0.   ,  0.   ,  0.   ,  0.   ,  0.   ,
+        0.   ,  0.   ,  0.   ,  0.   ,  0.   ,  0.   ,  0.   ,  0.   ,
+        0.   ,  0.   ,  0.   ,  0.   ]
+\end{verbatim}
+
+\includegraphics[scale=.9]{3B_fit.PNG}
+\includegraphics[scale=.9]{3B_residuals.PNG}
+\\
+\\
+This model sees a slight bit of overfitting, as can be seen if one extends the predictions past 60 months, where the exchange rate shoots off upwards at a fair rate (not nearly as quickly as the model in part \textbf{(A)}, but still noticeable).
+
+%%%%%%%%%%%%%%%%
+\newpage
+\section*{Problem 4}
+\subsection*{(A)}
+$A = \begin{bmatrix}
+    -1 & 2 & 0 & 0 & -1 \\
+    0 & -1 & 2 & -1 & 0 \\
+    -1 & 0 & 0 & 1 & 1 \\
+    1 & 0 & 0 & -1 & 0 \\
+    0 & -1 & -2 & -2 & 3
+\end{bmatrix}$ \\
+$x_0 = \begin{bmatrix}
+    .2 & .3 & .2 & .2 & .1
+\end{bmatrix}^T$ \\
+\\
+Row player utility = $x_0^T A y$ \\
+\begin{align*}
+    \text{min. } & x_0^T A y \\
+    \text{s.t. } & e^Ty = 1 \\
+    & y \geq 0
+\end{align*}
+$y = \begin{bmatrix}
+    0 & 0 & 0 & 1 & 0
+\end{bmatrix}$ \\
+\\
+This means that player B will always choose the fourth option, as such a choice minimizes player A's score/utility.
+
+\subsection*{(B)}
+\begin{align*}
+    \text{min. } & \mathbf{c}^T \mathbf{y} \\
+    \text{s.t. } & \mathbf{y} \text{ is a stochastic vector}
+\end{align*}
+
+Let $c_j = \min(\mathbf{c})$ \\
+\begin{align*}
+    \mathbf{c}^T \mathbf{y} &= c_1y_1 + c_2y_2 + \dots + c_ny_n \\
+    &\geq c_jy_1 + c_jy_2 + \dots + c_jy_n \\
+    &=c_j\mathbf{y} \\
+    &=c_j & \textbf{(since $\mathbf{y}$ is stochastic)}
+\end{align*}
+Therefore, $c_j = \min\{c_1, c_2, \dots, c_n\}$ is the optimal solution to the given linear program.
+
+\newpage
+\subsection*{(C)}
+$\mathbf{x}^T A = c \xrightarrow{}{} c_j = \mathbf{x}^T A_{(*, j)}$
+\begin{align*}
+    \underset{\mathbf{y}}{\text{min }} \mathbf{x}^T A \mathbf{y} &= \underset{\mathbf{y}}{\text{min }} \mathbf{c} \cdot \mathbf{y} \\
+    \underset{\mathbf{x}}{\text{max }} \underset{\mathbf{y}}{\text{min }} \mathbf{x}^T A \mathbf{y} &= \underset{\mathbf{x}}{\text{max }} \underset{\mathbf{y}}{\text{min }} \mathbf{c} \cdot \mathbf{y} \\
+    &= \underset{\mathbf{x}}{\text{max }} \min \{\mathbf{x}^T A_{(*, 1)}, \mathbf{x}^T A_{(*, 2)}, \dots, \mathbf{x}^T A_{(*, n)}\} & \text{using part \textbf{(B)}}
+\end{align*}
+
+\subsection*{(D)}
+\begin{align*}
+    \text{max}_x & \min(\mathbf{c}_1^T\mathbf{x}, \mathbf{c}_2^T\mathbf{x}, \dots, \mathbf{c}_n^T\mathbf{x}) \\
+    \text{s.t. } & \mathbf{1}^T \mathbf{x} = 1 \\
+    & \mathbf{x} \geq 0 \\
+    \\
+    \downarrow & \text{ Let } t= \min(\mathbf{c}_1^T\mathbf{x}, \mathbf{c}_2^T\mathbf{x}, \dots, \mathbf{c}_n^T\mathbf{x}) \\
+    \\
+    \text{max. } & t \\
+    \text{s.t. } & \mathbf{1}^T \mathbf{x} = 1 \\
+    & \mathbf{c}_1^T x \geq t \\
+    & \mathbf{c}_2^T x \geq t \\
+    \vdots \\
+    & \mathbf{c}_n^T x \geq t \\
+    & \mathbf{x} \geq 0 \\
+    \\
+    \downarrow \\
+    \\
+    \text{max. } & t \\
+    \text{s.t. } & \mathbf{1}^T \mathbf{x} = 1 \\
+    & -\mathbf{c}_1^T x + t \leq 0 \\
+    & -\mathbf{c}_2^T x + t \leq 0 \\
+    \vdots \\
+    & -\mathbf{c}_n^T x + t \leq 0 \\
+    & \mathbf{x} \geq 0 \\
+\end{align*}
+
+\subsection*{(E)}
+\begin{align*}
+    \text{max. } & t \\
+    \text{s.t. } & -A^T \mathbf{x} + \mathbf{1}t \leq 0 \\
+    & \mathbf{1}^T \mathbf{x} = 1 \\
+    & \mathbf{x} \geq 0 \\
+    \\
+    & \downarrow \text{ Let $t=t^+ - t^-$}\\
+    \\
+    \text{max. } & t^+ - t^- \\
+    \text{s.t. } & -A^T \mathbf{x} + \mathbf{1}(t^+ - t^-) \leq 0 \\
+    & \mathbf{1}^T \mathbf{x} \leq 1 \\
+    & -\mathbf{1}^T \mathbf{x} \leq -1 \\
+    & \mathbf{x}, t^+, t^- \geq 0 \\
+    \\
+    & \downarrow \text{ Convert to block matrix} \\
+    \\
+    \text{max. } & \begin{bmatrix} 0_{n \times 1} \\ 1 \\ -1 \end{bmatrix}^T \begin{bmatrix} x \\ t^+ \\ t^- \end{bmatrix} \\
+    \text{s.t. } & \begin{bmatrix} -A^T_{n \times n} & 1_{n \times 1} & 1_{n \times 1} \\ 1_{1 \times n} & 0 & 0 \\ -1_{1 \times n} & 0 & 0 \end{bmatrix} \begin{bmatrix} x \\ t^+ \\ t^- \end{bmatrix} \leq \begin{bmatrix} 0_{n \times 1} \\ 1 \\ -1 \end{bmatrix} \\
+    \\
+    & \downarrow \text{ Switch to dual block matrix} \\
+    \\
+    \text{min. } & \begin{bmatrix} 0_{n \times 1} \\ 1 \\ -1 \end{bmatrix}^T \begin{bmatrix} y \\ z^+ \\ z^- \end{bmatrix} \\
+    \text{s.t. } & \begin{bmatrix} -A_{n \times n} & 1_{n \times 1} & 1_{n \times 1} \\ 1_{1 \times n} & 0 & 0 \\ -1_{1 \times n} & 0 & 0 \end{bmatrix} \begin{bmatrix} y \\ z^+ \\ z^- \end{bmatrix} \leq \begin{bmatrix} 0_{n \times 1} \\ 1 \\ -1 \end{bmatrix} \\
+    \\
+    &\downarrow \text{ Convert to dual, and $z=z^+ - z^-$}\\
+    \\
+    \text{min. } & z \\
+    \text{s.t. } & -A\textbf{y} + \mathbf{1}z \leq 0 \\
+    & \mathbf{1}^T \mathbf{y} = 1 \\
+    & \mathbf{y} \geq 0
+\end{align*}
+
+\newpage
+\subsection*{(F)}
+\textbf{*See work in code linked at top of this document*} \\
+Row player equilibrium strategy: $\begin{bmatrix} 0 & 0 & .5 & .5 & 0 \end{bmatrix}$ \\
+Column player equilibrium strategy: $\begin{bmatrix} .387 & .105 & .122 & .387 & 0 \end{bmatrix}$ \\
+Value of the game: 0
+\end{document}
